@@ -1,6 +1,11 @@
 package mk
 
-import "github.com/ekalinin/enviriusx/commands"
+import (
+	"reflect"
+	"strings"
+
+	"github.com/ekalinin/enviriusx/commands"
+)
 
 type Cmd struct {
 }
@@ -20,7 +25,11 @@ func (cmd *Cmd) GetArgs() []commands.CommandArg {
 }
 
 func init() {
-	commands.Add("mk", func() commands.Commander {
-		return &Cmd{}
+	cmd := Cmd{}
+	cmdNames := strings.Split(reflect.TypeOf(cmd).PkgPath(), "/")
+	cmdName := cmdNames[len(cmdNames)-1]
+
+	commands.Add(cmdName, func() commands.Commander {
+		return &cmd
 	})
 }

@@ -2,14 +2,16 @@ package ls
 
 import (
 	"fmt"
+	"reflect"
+	"strings"
 
 	"github.com/ekalinin/enviriusx/commands"
 	"github.com/ekalinin/enviriusx/env"
 )
 
-type LsCmd struct{}
+type Cmd struct{}
 
-func (cmd *LsCmd) Run() error {
+func (cmd *Cmd) Run() error {
 	envs, err := env.GetEnvList()
 	if err != nil {
 		return nil
@@ -27,16 +29,20 @@ func (cmd *LsCmd) Run() error {
 	return nil
 }
 
-func (cmd *LsCmd) GetHelp() string {
+func (cmd *Cmd) GetHelp() string {
 	return "List environments"
 }
 
-func (cmd *LsCmd) GetArgs() []commands.CommandArg {
+func (cmd *Cmd) GetArgs() []commands.CommandArg {
 	return []commands.CommandArg{}
 }
 
 func init() {
-	commands.Add("ls", func() commands.Commander {
-		return &LsCmd{}
+	cmd := Cmd{}
+	cmdNames := strings.Split(reflect.TypeOf(cmd).PkgPath(), "/")
+	cmdName := cmdNames[len(cmdNames)-1]
+
+	commands.Add(cmdName, func() commands.Commander {
+		return &cmd
 	})
 }
