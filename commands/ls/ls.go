@@ -31,8 +31,8 @@ func (cmd *LsCmd) GetHelp() string {
 	return "List environments"
 }
 
-func (cmd *LsCmd) GetDesc() string {
-	return ""
+func (cmd *LsCmd) GetArgs() []commands.CommandArg {
+	return []commands.CommandArg{}
 }
 
 func init() {

@@ -1,9 +1,14 @@
 package commands
 
+type CommandArg struct {
+	Name string
+	Help string
+}
+
 type Commander interface {
 	Run() error
 	GetHelp() string
-	GetDesc() string
+	GetArgs() []CommandArg
 }
 
 type Command func() Commander
