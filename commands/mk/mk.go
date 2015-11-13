@@ -1,35 +1,27 @@
 package mk
 
 import (
-	"reflect"
-	"strings"
-
 	"github.com/ekalinin/enviriusx/commands"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
-type Cmd struct {
+type MkCmd struct {
+	Name    string
+	EnvName string
 }
 
-func (cmd *Cmd) Run() error {
+func (cmd *MkCmd) Run(c *kingpin.ParseContext) error {
 	return nil
 }
 
-func (cmd *Cmd) GetHelp() string {
-	return "Create environment"
-}
-
-func (cmd *Cmd) GetArgs() []commands.CommandArg {
-	return []commands.CommandArg{
-		{"name", "Environment name to create"},
-	}
+func (c *MkCmd) Configure(app *kingpin.Application) {
+	ls := app.Command(c.Name, "Create environment").Action(c.Run)
+	ls.Flag("env-name", "Environment name").Short('n').StringVar(&c.EnvName)
 }
 
 func init() {
-	cmd := Cmd{}
-	cmdNames := strings.Split(reflect.TypeOf(cmd).PkgPath(), "/")
-	cmdName := cmdNames[len(cmdNames)-1]
-
-	commands.Add(cmdName, func() commands.Commander {
+	cmd := MkCmd{"mk", ""}
+	commands.Add(cmd.Name, func() commands.Commander {
 		return &cmd
 	})
 }

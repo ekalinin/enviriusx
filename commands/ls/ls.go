@@ -2,16 +2,18 @@ package ls
 
 import (
 	"fmt"
-	"reflect"
-	"strings"
 
 	"github.com/ekalinin/enviriusx/commands"
 	"github.com/ekalinin/enviriusx/env"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
-type Cmd struct{}
+type LsCmd struct {
+	Name     string
+	ShowMeta bool
+}
 
-func (cmd *Cmd) Run() error {
+func (cmd *LsCmd) Run(c *kingpin.ParseContext) error {
 	envs, err := env.GetEnvList()
 	if err != nil {
 		return nil
@@ -29,20 +31,14 @@ func (cmd *Cmd) Run() error {
 	return nil
 }
 
-func (cmd *Cmd) GetHelp() string {
-	return "List environments"
-}
-
-func (cmd *Cmd) GetArgs() []commands.CommandArg {
-	return []commands.CommandArg{}
+func (c *LsCmd) Configure(app *kingpin.Application) {
+	ls := app.Command(c.Name, "List environments").Action(c.Run)
+	ls.Flag("show-meta", "").Short('m').BoolVar(&c.ShowMeta)
 }
 
 func init() {
-	cmd := Cmd{}
-	cmdNames := strings.Split(reflect.TypeOf(cmd).PkgPath(), "/")
-	cmdName := cmdNames[len(cmdNames)-1]
-
-	commands.Add(cmdName, func() commands.Commander {
+	cmd := LsCmd{"ls", true}
+	commands.Add(cmd.Name, func() commands.Commander {
 		return &cmd
 	})
 }

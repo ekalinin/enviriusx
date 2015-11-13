@@ -1,14 +1,10 @@
 package commands
 
-type CommandArg struct {
-	Name string
-	Help string
-}
+import "gopkg.in/alecthomas/kingpin.v2"
 
 type Commander interface {
-	Run() error
-	GetHelp() string
-	GetArgs() []CommandArg
+	Run(c *kingpin.ParseContext) error
+	Configure(app *kingpin.Application)
 }
 
 type Command func() Commander
