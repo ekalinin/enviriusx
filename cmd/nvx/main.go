@@ -14,6 +14,7 @@ func main() {
 
 	app := kingpin.UsageTemplate(kingpin.CompactUsageTemplate).Version(version).Author("Eugene Kalinin")
 	kingpin.CommandLine.Help = "Universal Virtual Environments Manager v." + version
+	kingpin.CommandLine.HelpFlag.Short('h')
 
 	for _, mkCmd := range commands.Commands {
 		cmd := mkCmd()
