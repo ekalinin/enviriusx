@@ -9,7 +9,7 @@ type Environment struct {
 	langs []langs.Lang
 }
 
-func mkEnv(name string) *Environment {
+func NewEnv(name string) *Environment {
 	return &Environment{name, []langs.Lang{}}
 }
 

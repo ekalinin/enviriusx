@@ -29,7 +29,7 @@ func GetEnvList() ([]Environment, error) {
 	}
 
 	for _, f := range files {
-		envs = append(envs, *mkEnv(f.Name()))
+		envs = append(envs, *NewEnv(f.Name()))
 	}
 	return envs, nil
 }
