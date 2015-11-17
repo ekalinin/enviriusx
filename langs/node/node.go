@@ -8,13 +8,13 @@ type NodeLang struct {
 	langs.Lang
 }
 
-func (l *NodeLang) ListVersions() {
+func (l *NodeLang) ShowVersions() {
 
 }
 
 func init() {
-	l := GoLang{"node"}
-	langs.Add(cmd.Name, func() langs.LangCreator {
+	l := NodeLang{langs.Lang{"node"}}
+	langs.Add(l.Name, func() langs.LangBuilder {
 		return &l
 	})
 }

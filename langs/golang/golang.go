@@ -8,13 +8,13 @@ type GoLang struct {
 	langs.Lang
 }
 
-func (l *GoLang) ListVersions() {
+func (l *GoLang) ShowVersions() {
 
 }
 
 func init() {
-	l := GoLang{"golang"}
-	langs.Add(cmd.Name, func() langs.LangCreator {
+	l := GoLang{langs.Lang{"golang"}}
+	langs.Add(l.Name, func() langs.LangBuilder {
 		return &l
 	})
 }
