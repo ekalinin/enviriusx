@@ -5,6 +5,7 @@ import (
 
 	"github.com/ekalinin/enviriusx/commands"
 	_ "github.com/ekalinin/enviriusx/commands/loadall"
+	_ "github.com/ekalinin/enviriusx/langs/loadall"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
