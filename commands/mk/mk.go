@@ -51,7 +51,7 @@ func (cmd *MkCmd) Run(c *kingpin.ParseContext) error {
 
 func (c *MkCmd) Configure(app *kingpin.Application) {
 	cmd := app.Command(c.Name, "Create environment").Action(c.Run)
-	cmd.Flag("env-name", "Environment name").Short('n').StringVar(&c.EnvName)
+	cmd.Arg("name", "Environment name").Required().StringVar(&c.EnvName)
 	cmd.Flag("force", "Re-create environment if it already exists").Short('f').BoolVar(&c.Force)
 	cmd.Flag("on", "Activate environment after installation").BoolVar(&c.AutoOn)
 
