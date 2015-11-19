@@ -1,6 +1,9 @@
 package env
 
 import (
+	"os"
+	"path/filepath"
+
 	"github.com/ekalinin/enviriusx/langs"
 )
 
@@ -22,7 +25,14 @@ func (env *Environment) WriteMeta() {
 }
 
 func (env *Environment) IsExists() bool {
-	return true
+	_, err := os.Stat(filepath.Join(GetEnvHome(), env.name))
+	if err == nil {
+		return true //, nil
+	}
+	if os.IsNotExist(err) {
+		return false //, nil
+	}
+	return true //, err
 }
 
 func (env *Environment) Create() error {
