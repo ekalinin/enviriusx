@@ -3,14 +3,15 @@ package mk
 import (
 	"errors"
 
+	"gopkg.in/alecthomas/kingpin.v2"
+
 	"github.com/ekalinin/enviriusx/commands"
 	"github.com/ekalinin/enviriusx/env"
 	"github.com/ekalinin/enviriusx/langs"
-
-	"gopkg.in/alecthomas/kingpin.v2"
 )
 
-type MkCmd struct {
+// Cmd command
+type Cmd struct {
 	Name    string
 	EnvName string
 	Force   bool
@@ -18,11 +19,12 @@ type MkCmd struct {
 	Langs   map[string]*string
 }
 
-func (cmd *MkCmd) generateEnvName() {
+func (cmd *Cmd) generateEnvName() {
 	// TODO: implement
 }
 
-func (cmd *MkCmd) Run(c *kingpin.ParseContext) error {
+// Run command
+func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
 	// TODO: add  langs itno Env
 
 	if cmd.EnvName == "" {
@@ -30,6 +32,12 @@ func (cmd *MkCmd) Run(c *kingpin.ParseContext) error {
 	}
 
 	newEnv := env.NewEnv(cmd.EnvName)
+
+	//for l, v := range cmd.Langs {
+	//	if v != "" {
+	//		newEnv.AddLang(langs.CreateLang(l, v))
+	//	}
+	//}
 
 	if newEnv.IsExists() {
 		if cmd.Force {
@@ -49,20 +57,21 @@ func (cmd *MkCmd) Run(c *kingpin.ParseContext) error {
 	return nil
 }
 
-func (c *MkCmd) Configure(app *kingpin.Application) {
-	cmd := app.Command(c.Name, "Create environment").Action(c.Run)
-	cmd.Arg("name", "Environment name").Required().StringVar(&c.EnvName)
-	cmd.Flag("force", "Re-create environment if it already exists").Short('f').BoolVar(&c.Force)
-	cmd.Flag("on", "Activate environment after installation").BoolVar(&c.AutoOn)
+// Configure Set configuration for the command line
+func (cmd *Cmd) Configure(app *kingpin.Application) {
+	cl := app.Command(cmd.Name, "Create environment").Action(cmd.Run)
+	cl.Arg("name", "Environment name").Required().StringVar(&cmd.EnvName)
+	cl.Flag("force", "Re-create environment if it already exists").Short('f').BoolVar(&cmd.Force)
+	cl.Flag("on", "Activate environment after installation").BoolVar(&cmd.AutoOn)
 
-	for l, _ := range langs.Langs {
-		c.Langs[l] = new(string)
-		cmd.Flag(l, "Install certain version of the "+l).StringVar(c.Langs[l])
+	for l := range langs.Langs {
+		cmd.Langs[l] = new(string)
+		cl.Flag(l, "Install certain version of the "+l).StringVar(cmd.Langs[l])
 	}
 }
 
 func init() {
-	cmd := MkCmd{"mk", "", false, false, map[string]*string{}}
+	cmd := Cmd{"mk", "", false, false, map[string]*string{}}
 	commands.Add(cmd.Name, func() commands.Commander {
 		return &cmd
 	})
