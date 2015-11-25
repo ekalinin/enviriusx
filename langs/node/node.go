@@ -13,7 +13,7 @@ func (l *NodeLang) ShowVersions() {
 }
 
 func init() {
-	l := NodeLang{langs.Lang{"node"}}
+	l := NodeLang{*langs.NewLang("node")}
 	langs.Add(l.Name, func() langs.LangBuilder {
 		return &l
 	})

@@ -13,7 +13,7 @@ func (l *GoLang) ShowVersions() {
 }
 
 func init() {
-	l := GoLang{langs.Lang{"golang"}}
+	l := GoLang{*langs.NewLang("golang")}
 	langs.Add(l.Name, func() langs.LangBuilder {
 		return &l
 	})
