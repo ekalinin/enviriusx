@@ -33,11 +33,13 @@ func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
 
 	newEnv := env.NewEnv(cmd.EnvName)
 
-	//for l, v := range cmd.Langs {
-	//	if v != "" {
-	//		newEnv.AddLang(langs.CreateLang(l, v))
-	//	}
-	//}
+	for l, v := range cmd.Langs {
+		if *v != "" {
+			newLang := langs.Langs[l]()
+			newLang.SetVersion(*v)
+			newEnv.AddLang(&newLang)
+		}
+	}
 
 	if newEnv.IsExists() {
 		if cmd.Force {
