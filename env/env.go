@@ -1,8 +1,10 @@
 package env
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/ekalinin/enviriusx/langs"
 )
@@ -10,16 +12,16 @@ import (
 // Environment base class
 type Environment struct {
 	name  string
-	langs []langs.Lang
+	langs []langs.LangBuilder
 }
 
 // NewEnv constructor
 func NewEnv(name string) *Environment {
-	return &Environment{name, []langs.Lang{}}
+	return &Environment{name, []langs.LangBuilder{}}
 }
 
 // AddLang adds new language into environment
-func (env *Environment) AddLang(l *langs.Lang) {
+func (env *Environment) AddLang(l *langs.LangBuilder) {
 	env.langs = append(env.langs, *l)
 }
 
@@ -42,6 +44,10 @@ func (env *Environment) IsExists() bool {
 
 // Create creates environment
 func (env *Environment) Create() error {
+	fmt.Println("Total langs: " + strconv.Itoa(len(env.langs)))
+	for _, l := range env.langs {
+		fmt.Println(l.GetName() + " :: " + l.GetVersion())
+	}
 	return nil
 }
 
