@@ -20,13 +20,19 @@ type Cmd struct {
 }
 
 func (cmd *Cmd) generateEnvName() {
-	// TODO: implement
+	if cmd.EnvName != "" {
+		return
+	}
+	for l, v := range cmd.Langs {
+		cmd.EnvName += l + "-" + *v + "-"
+	}
+	if cmd.EnvName != "" {
+		cmd.EnvName = cmd.EnvName[:len(cmd.EnvName)-1]
+	}
 }
 
 // Run command
 func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
-	// TODO: add  langs itno Env
-
 	if cmd.EnvName == "" {
 		cmd.generateEnvName()
 	}
@@ -62,7 +68,7 @@ func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
 // Configure Set configuration for the command line
 func (cmd *Cmd) Configure(app *kingpin.Application) {
 	cl := app.Command(cmd.Name, "Create environment").Action(cmd.Run)
-	cl.Arg("name", "Environment name").Required().StringVar(&cmd.EnvName)
+	cl.Arg("name", "Environment name").StringVar(&cmd.EnvName)
 	cl.Flag("force", "Re-create environment if it already exists").Short('f').BoolVar(&cmd.Force)
 	cl.Flag("on", "Activate environment after installation").BoolVar(&cmd.AutoOn)
 
