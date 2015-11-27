@@ -10,7 +10,7 @@ import (
 	"github.com/ekalinin/enviriusx/langs"
 )
 
-// Cmd command
+// Cmd command description
 type Cmd struct {
 	Name    string
 	EnvName string
@@ -19,6 +19,7 @@ type Cmd struct {
 	Langs   map[string]*string
 }
 
+// generateEnvName generates a new EnvName if current is null
 func (cmd *Cmd) generateEnvName() {
 	if cmd.EnvName != "" {
 		return
