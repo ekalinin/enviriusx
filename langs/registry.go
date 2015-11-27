@@ -15,6 +15,7 @@ type LangBuilder interface {
 	//Build() error
 	//Configure() error
 	//Install() error
+	Deploy() error
 
 	//RmSrc() error
 	//CopyBin() error
