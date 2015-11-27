@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strconv"
 
 	"github.com/ekalinin/enviriusx/langs"
 )
@@ -44,9 +43,11 @@ func (env *Environment) IsExists() bool {
 
 // Create creates environment
 func (env *Environment) Create() error {
-	fmt.Println("Total langs: " + strconv.Itoa(len(env.langs)))
+	env_full_path := filepath.Join(GetEnvHome(), env.name)
+	os.Mkdir(env_full_path, 0700)
 	for _, l := range env.langs {
-		fmt.Println(l.GetName() + " :: " + l.GetVersion())
+		fmt.Println("  * installing " + l.GetName() + "==" + l.GetVersion())
+		l.Deploy()
 	}
 	return nil
 }
