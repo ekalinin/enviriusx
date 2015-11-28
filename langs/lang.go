@@ -1,5 +1,7 @@
 package langs
 
+import "fmt"
+
 // Lang version of the certain programming language
 type Lang struct {
 	Name    string
@@ -29,8 +31,8 @@ func (lang *Lang) GetURL() {
 }
 
 // ShowVersion show available versions for install
-func (lang *Lang) ShowVersion() {
-
+func (lang *Lang) ShowVersions() {
+	fmt.Println("show version ...")
 }
 
 // CheckDeps checks all deps for language
