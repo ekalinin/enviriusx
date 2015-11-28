@@ -52,7 +52,6 @@ func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
 		if cmd.Force {
 			// TODO: add rm commend here with env name
 		} else {
-			// TODO: check that app error code != 0
 			return errors.New("Environment is already exists.")
 		}
 	}
