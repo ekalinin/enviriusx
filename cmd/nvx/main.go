@@ -5,16 +5,15 @@ import (
 
 	"github.com/ekalinin/enviriusx/commands"
 	_ "github.com/ekalinin/enviriusx/commands/loadall"
+	"github.com/ekalinin/enviriusx/langs"
 	_ "github.com/ekalinin/enviriusx/langs/loadall"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
-const version = "0.1.0"
-
 func main() {
-
-	app := kingpin.UsageTemplate(kingpin.CompactUsageTemplate).Version(version).Author("Eugene Kalinin")
-	kingpin.CommandLine.Help = "Universal Virtual Environments Manager v." + version
+	v := langs.Version
+	app := kingpin.UsageTemplate(kingpin.CompactUsageTemplate).Version(v).Author("Eugene Kalinin")
+	kingpin.CommandLine.Help = "Universal Virtual Environments Manager v" + v
 	kingpin.CommandLine.HelpFlag.Short('h')
 
 	for _, mkCmd := range commands.Commands {
