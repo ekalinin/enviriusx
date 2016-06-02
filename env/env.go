@@ -20,8 +20,10 @@ func NewEnv(name string) *Environment {
 }
 
 // AddLang adds new language into environment
-func (env *Environment) AddLang(l *langs.LangBuilder) {
-	env.langs = append(env.langs, *l)
+func (env *Environment) AddLang(l string, v string) {
+	newLang := langs.Langs[l]()
+	newLang.SetVersion(v)
+	env.langs = append(env.langs, newLang)
 }
 
 // WriteMeta saves meta data into environment's folder
@@ -33,20 +35,20 @@ func (env *Environment) WriteMeta() {
 func (env *Environment) IsExists() bool {
 	_, err := os.Stat(filepath.Join(GetEnvHome(), env.name))
 	if err == nil {
-		return true //, nil
+		return true
 	}
 	if os.IsNotExist(err) {
-		return false //, nil
+		return false
 	}
-	return true //, err
+	return true
 }
 
 // Create creates environment
 func (env *Environment) Create() error {
-	env_full_path := filepath.Join(GetEnvHome(), env.name)
-	os.Mkdir(env_full_path, 0700)
+	envFullName := filepath.Join(GetEnvHome(), env.name)
+	os.Mkdir(envFullName, 0700)
 	for _, l := range env.langs {
-		fmt.Println("  * installing " + l.GetName() + "==" + l.GetVersion())
+		fmt.Println("  - installing " + l.GetName() + "==" + l.GetVersion())
 		l.Deploy()
 	}
 	return nil
