@@ -36,6 +36,11 @@ func (cmd *Cmd) generateEnvName() {
 	}
 }
 
+// Run command
+func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
+	return runCmd(cmd)
+}
+
 // Configure Set configuration for the command line
 func (cmd *Cmd) Configure(app *kingpin.Application) {
 	cl := app.Command(cmd.Name, "Create environment").Action(cmd.Run)

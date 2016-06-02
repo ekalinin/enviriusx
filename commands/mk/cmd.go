@@ -4,13 +4,11 @@ import (
 	"errors"
 	"fmt"
 
-	"gopkg.in/alecthomas/kingpin.v2"
-
 	"github.com/ekalinin/enviriusx/env"
 )
 
 // Run command
-func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
+func runCmd(cmd *Cmd) error {
 	cmd.generateEnvName()
 	newEnv := env.NewEnv(cmd.EnvName)
 

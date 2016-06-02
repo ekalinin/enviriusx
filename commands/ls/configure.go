@@ -11,6 +11,11 @@ type Cmd struct {
 	ShowMeta bool
 }
 
+// Run shows all available environments
+func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
+	return runCmd(cmd)
+}
+
 // Configure Set configuration for the command line
 func (cmd *Cmd) Configure(app *kingpin.Application) {
 	ls := app.Command(cmd.Name, "List environments").Action(cmd.Run)

@@ -4,11 +4,9 @@ import (
 	"fmt"
 
 	"github.com/ekalinin/enviriusx/env"
-	"gopkg.in/alecthomas/kingpin.v2"
 )
 
-// Run shows all available environments
-func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
+func runCmd(cmd *Cmd) error {
 	envs, err := env.GetEnvList()
 	if err != nil {
 		return err
