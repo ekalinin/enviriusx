@@ -7,7 +7,7 @@ import (
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
-// Run shows all availavle environments
+// Run shows all available environments
 func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
 	envs, err := env.GetEnvList()
 	if err != nil {
