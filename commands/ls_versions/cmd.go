@@ -13,17 +13,6 @@ type Cmd struct {
 	Langs map[string]*bool
 }
 
-// Run command
-func (cmd *Cmd) Run(c *kingpin.ParseContext) error {
-	for l, show := range cmd.Langs {
-		if *show {
-			langs.Langs[l]().ShowVersions()
-		}
-	}
-
-	return nil
-}
-
 // Configure Set configuration for the command line
 func (cmd *Cmd) Configure(app *kingpin.Application) {
 	lsv := app.Command(cmd.Name, "Lists available versions for certain language").Action(cmd.Run)
