@@ -1,11 +1,28 @@
 package langs
 
-import "fmt"
-
 // Lang version of the certain programming language
-type Lang struct {
+type LangBuild struct {
 	Name    string
 	Version string
+}
+
+// LangBuilder interface
+type LangBuilder interface {
+	GetName() string
+	GetVersion() string
+
+	//GetUrl()
+
+	//CheckDeps() bool
+	//Download() error
+	//Unpack() error
+	//Build() error
+	//Configure() error
+	//Install() error
+	Deploy() error
+
+	//RmSrc() error
+	//CopyBin() error
 }
 
 // NewLang constructor
@@ -31,9 +48,9 @@ func (lang *Lang) GetURL() {
 }
 
 // ShowVersion show available versions for install
-func (lang *Lang) ShowVersions() {
-	fmt.Println("show version ...")
-}
+//func (lang *Lang) ShowVersions() {
+//	fmt.Println("show version ...")
+//}
 
 // CheckDeps checks all deps for language
 func (lang *Lang) CheckDeps() error {
