@@ -1,16 +1,24 @@
 package langs
 
 // Lang version of the certain programming language
-type LangBuild struct {
+type Lang struct {
 	Name    string
 	Version string
 }
 
-// LangBuilder interface
-type LangBuilder interface {
+// LangVersioner shows all available versions
+type LangVersionPresenter interface {
+	ShowVersions()
+}
+
+// LangVersioner allow work with versions
+type LangVersioner interface {
 	GetName() string
 	GetVersion() string
+	SetVersion(string)
+}
 
+type LangDeployer interface {
 	//GetUrl()
 
 	//CheckDeps() bool
@@ -25,32 +33,29 @@ type LangBuilder interface {
 	//CopyBin() error
 }
 
+// LangBuilder build certain version of the language
+type LangBuilder interface {
+	LangVersioner
+	LangVersionPresenter
+	LangDeployer
+}
+
 // NewLang constructor
 func NewLang(name string) *Lang {
 	return &Lang{name, ""}
-}
-
-func (lang *Lang) GetVersion() string {
-	return lang.Version
 }
 
 func (lang *Lang) GetName() string {
 	return lang.Name
 }
 
+func (lang *Lang) GetVersion() string {
+	return lang.Version
+}
+
 func (lang *Lang) SetVersion(v string) {
 	lang.Version = v
 }
-
-// GetURL returns url for download
-func (lang *Lang) GetURL() {
-
-}
-
-// ShowVersion show available versions for install
-//func (lang *Lang) ShowVersions() {
-//	fmt.Println("show version ...")
-//}
 
 // CheckDeps checks all deps for language
 func (lang *Lang) CheckDeps() error {

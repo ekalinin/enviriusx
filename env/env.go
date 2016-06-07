@@ -47,9 +47,16 @@ func (env *Environment) IsExists() bool {
 func (env *Environment) Create() error {
 	envFullName := filepath.Join(GetEnvHome(), env.name)
 	os.Mkdir(envFullName, 0700)
-	for _, l := range env.langs {
-		fmt.Println("  - installing " + l.GetName() + "==" + l.GetVersion())
-		l.Deploy()
+
+	// TODO: parallel installation
+	for i, l := range env.langs {
+		fmt.Printf("  - %d : installing %v==%v ...", i, l.GetName(), l.GetVersion())
+
+		if err := l.Deploy(); err != nil {
+			fmt.Println(" failed:", err)
+		} else {
+			fmt.Println(" ok")
+		}
 	}
 	return nil
 }
