@@ -1,4 +1,4 @@
-package ls_versions
+package lsversions
 
 import (
 	"gopkg.in/alecthomas/kingpin.v2"

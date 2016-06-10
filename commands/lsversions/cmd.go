@@ -1,4 +1,4 @@
-package ls_versions
+package lsversions
 
 import "github.com/ekalinin/enviriusx/langs"
 
